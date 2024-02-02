@@ -4,7 +4,7 @@ theme:
   palette:
     primary: "Deep Blue"
     accent: "Light Blue"
-  logo: logo.jpeg
+  #logo: logo.jpeg
   features:
     - navigation.tabs
     - navigation.tabs.sticky
