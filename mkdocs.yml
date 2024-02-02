@@ -1,0 +1,49 @@
+site_name: ICSC Spoke2 High Rate Analysis platform
+theme:
+  name: material
+  palette:
+    primary: "Deep Blue"
+    accent: "Light Blue"
+  logo: logo.jpeg
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+nav:
+  - Introduction: "introduction.md"
+  - How it works:
+      - Architecture and Components: "how_it_works/components.md"
+  - Quick Start:
+      - Requirements: "tutorials/reqs.md"
+      - User-customized images: "tutorials/user_defined_image.md"
+      - Using Dask:
+          - Initialization: "tutorials/dask/dask_init.md"
+          - Cluster management: "tutorials/dask/dask_management.md"
+          - Interactive analysis: "tutorials/dask/dask_interactive.md"
+          - Python script: "tutorials/dask/dask_scripting.md"
+      - AAA Access: "tutorials/aaa_access.md"
+  - FAQs: "faqs.md"
+repo_name: "ICSC-Spoke2-repo/HighRateAnalysis-WP5"
+repo_url: "https://github.com/ICSC-Spoke2-repo/HighRateAnalysis-WP5"
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: "https://github.com/ICSC-Spoke2-repo"
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
