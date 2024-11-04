@@ -1,5 +1,5 @@
 #overide defaault ingress
-hostname: hub.<PUBLIC-IP>.myip.cloud.infn.it
+hostname: <PRIVATE-IP>.nip.io
 ingress: true
 # Show options for htcondor integration
 htcondor: false
@@ -7,19 +7,19 @@ htcondor: false
 jupyterhub:
   ingress:
     # Keep default ingress disabled
-    enabled: false
-    # annotations:
-    #   kubernetes.io/ingress.class: "nginx"
-    #   # comment this to use your own certs
-    #   #cert-manager.io/issuer: "selfsigned-issuer"
-    # hosts:
-    #   - {{ .Values.hostname }}
-    # tls:
-    #   - hosts:
-    #     - {{ .Values.hostname }}
-    #     secretName: jhub-tls
-    #     # use this if you put your certs on ./certs dir
-    #     #secretName: tls-secrets
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      cert-manager.io/issuer: "selfsigned-issuer"
+    hosts:
+      - <PRIVATE-IP>.nip.io
+    tls:
+      - hosts:
+        - <PRIVATE-IP>.nip.io
+      #     secretName: jhub-tls
+      #     # use this if you put your certs on ./certs dir
+      #     #secretName: tls-secrets
+
 
   scheduling:
     userScheduler:
@@ -49,6 +49,15 @@ jupyterhub:
       dynamic:
         storageClass: local-path
       homeMountPath: /opt/workspace/persistent-storage
+        extraVolumes:
+        - name: nfs
+          hostPath:
+            path: /home/ubuntu/nfs
+            type: Directory
+      extraVolumeMounts:
+        - name: nfs
+          mountPath: /opt/workspace/nfs
+
 
   #prePuller:
   #  extraImages:
@@ -78,10 +87,10 @@ jupyterhub:
         storage: 1Gi
         storageClassName: local-path
     extraEnv:
-      OAUTH_CALLBACK_URL: https://hub.<PUBLIC-IP>.myip.cloud.infn.it/hub/oauth_callback
+      OAUTH_CALLBACK_URL: https://<PRIVATE-IP>.nip.io/hub/oauth_callback
       OAUTH_ENDPOINT: https://iam-demo.cloud.cnaf.infn.it/
       #OAUTH_ENDPOINT: https://dodas-iam.cloud.cnaf.infn.it/
-      OAUTH_GROUPS: /highrate
+      OAUTH_GROUPS: /fastcv
       ADMIN_OAUTH_GROUPS: /admins
       WITH_GPU: "false"
       ACCESS_TOKEN: "dummy"
@@ -283,7 +292,7 @@ jupyterhub:
             <label for="stack">Select your desired image:</label>
             <input list="images" name="img">
             <datalist id="images">
-            <option value="ghcr.io/ttedeschi/jlab:wp5-alma8-0.0.34"> Almalinux8 base image </option> #https://github.com/ttedeschi/custom-images/blob/0.0.34/jupyterlab/Dockerfile.wp5-alma8
+            <option value="ghcr.io/ttedeschi/jlab:wp5-alma8-0.0.40"> Almalinux8 base image with ROOT 6.30 </option> #https://github.com/ttedeschi/custom-images/blob/0.0.40/jupyterlab/Dockerfile.wp5-alma8
             </datalist>
             <br>
             <label for="cpu">Select your desired number of cores:</label>
