@@ -30,9 +30,9 @@ jupyterhub:
       enabled: false
 
   cull:
-    enabled: true
-    timeout: 3600
-    every: 600
+    enabled: false
+    #timeout: 3600
+    #every: 600
 
   proxy:
     chp:
