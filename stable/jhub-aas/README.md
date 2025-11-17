@@ -40,3 +40,35 @@ kubectl create namespace jhub
 helm upgrade --install --cleanup-on-fail --namespace jhub jhub ./ 
 ```
 
+## Enable offloading
+
+Patch dask cluster custom resource:
+```bash
+kubectl patch crd daskclusters.kubernetes.dask.org \
+  --type=json \
+  -p='[
+    {
+      "op": "replace",
+      "path": "/spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/scheduler/properties/service/properties/ports/items/properties/targetPort/type",
+      "value": "integer"
+    }
+  ]'
+```
+
+Modify `../ssh-fwd/ssh-fwd.yaml` inserting correct IP address and install ssh-forwarder machinery:
+```bash
+kubectl apply -f ../ssh-fwd/ssh-fwd.yaml -n jhub
+kubectl apply -f ../ssh-fwd/ssh-fwd-svc.yaml -n jhub
+kubectl apply -f ../ssh-fwd/listener-svc.yaml -n jhub
+```
+
+Insert kubeconfig in `../vk/kustomization/kubeconfig`
+```bash
+kubectl apply -k ./vk/kustomization
+```
+
+Insert the newly-created InterLink configmap name in `../vk/vk-na.yaml` and deploy the Virtual Kubelet pod (VK container + InterLink container + InterLink HTCondor Plugin container):
+```bash
+kubectl apply -f ../vk/vk-na.yaml -n vk
+kubectl apply -f ../sa-interlink.yaml -n vk
+```
