@@ -38,7 +38,7 @@ jupyterhub:
     chp:
       networkPolicy:
         enabled: false
-    secretToken: 72077073d819ce7a118a7dd7e2ce3eb74328cd306faa0540b1045d56113fdd0e
+    secretToken: 
     #<PUT HERE A RANDOM TOKEN openssl rand -hex 32>
 
   singleuser:
@@ -68,8 +68,8 @@ jupyterhub:
   hub:
     image:
       name: ghcr.io/ttedeschi/jhub
-      tag: 'dask-on-k8s-v0.0.4'
-    cookieSecret: 72077073d819ce7a118a7dd7e2ce3eb74328cd306faa0540b1045d56113fdd0e
+      tag: 'v0.0.1'
+    cookieSecret: 
     #<PUT HERE A RANDOM TOKEN openssl rand -hex 32>
     networkPolicy:
       enabled: false
